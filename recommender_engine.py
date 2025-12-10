@@ -173,7 +173,7 @@ except Exception as e:
 
 
 st.title("MusicMatch")
-st.markdown('<div class="subtitle">Discover songs based on what you love!</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Your next obsession starts here</div>', unsafe_allow_html=True)
 
 
 
