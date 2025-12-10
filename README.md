@@ -4,24 +4,23 @@
 
 **MusicMatch** is an intelligent **content-based music recommender
 system** designed to suggest similar tracks based on a user's input
-song.\
+song.
 The system uses a modern **Streamlit Web Interface** and analyzes key
 audio-related features such as:
 
--   Track Popularity\
--   Artist Followers\
+-   Track Popularity
+-   Artist Followers
 -   Genres
 
 Similarity between tracks is calculated using the **Cosine Similarity**
 metric.
 
-This project was submitted to the:\
+This project was submitted to the:
 **University of Information Technology and Communications -- College of
 Business Information**
 
-**Submitted By:** Um Al-Banein Yaqub Yusuf\
-**Supervisors:** Dr. Samerra Faris, Dr. Zainab Khudair\
-**Programming Language:** Python\
+**Submitted By:** Um Al-Banein Yaqub Yusuf
+**Programming Language:** Python
 **Dataset:** `track_data_final.csv`
 
 ---
@@ -75,11 +74,11 @@ After launching, Streamlit will open automatically in your browser
 
     http://localhost:8501
 
--   **Search:** Enter a song name (e.g., "The Hills")\
+-   **Search:** Enter a song name (e.g., "The Hills by The Weeknd")
 -   **Results:**
-    -   The closest matched track (via Fuzzy Matching)\
-    -   A grid of recommended songs\
-    -   Match percentages\
+    -   The closest matched track (via Fuzzy Matching)
+    -   A grid of recommended songs
+    -   Match percentages
     -   A logical explanation for each recommendation
 
 ### 3.3 Exit the Application
@@ -94,14 +93,14 @@ To stop the Streamlit server:
 
 ### Data Cleaning
 
--   Automatic removal of missing values\
+-   Automatic removal of missing values
 -   Duplicate handling based on track and artist names to ensure unique
     recommendations
 
 ### Feature Scaling
 
 -   Uses **MinMaxScaler** to normalize numerical features to a `[0, 1]`
-    range\
+    range
 -   Track duration was intentionally excluded to prioritize stylistic
     similarity over length
 
@@ -112,7 +111,7 @@ To stop the Streamlit server:
 
 ### Robust Input Handling
 
--   `fuzzywuzzy` matches user input to the closest existing song\
+-   `fuzzywuzzy` matches user input to the closest existing song
 -   A minimum match score (≥ 60) ensures relevant results and typo
     tolerance
 
@@ -120,8 +119,8 @@ To stop the Streamlit server:
 
 Each recommendation is supported by a clear justification based on:
 
--   Shared Genres\
--   Same Artist similarity\
+-   Shared Genres
+-   Same Artist similarity
 -   Popularity Trends: Mainstream Hits vs. Hidden Gems
 
 ---
