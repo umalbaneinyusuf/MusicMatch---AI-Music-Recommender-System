@@ -1,126 +1,182 @@
-# MusicMatch - AI Music Recommender System
+# MusicMatch — AI Music Recommender System
 
-## 1. Project Overview
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-blue?logo=streamlit)](https://musicmatch---ai-music-recommender-system-t9qg7sqnj9nqi4wnvx3bq.streamlit.app/)
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue?logo=python)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-lightgrey)](#license)
 
-**MusicMatch** is an intelligent **content-based music recommender
-system** designed to suggest similar tracks based on a user's input
-song.
-The system uses a modern **Streamlit Web Interface** and analyzes key
-audio-related features such as:
-
--   Track Popularity
--   Artist Followers
--   Genres
-
-Similarity between tracks is calculated using the **Cosine Similarity**
-metric.
-
-This project was submitted to the:
-**University of Information Technology and Communications -- College of
-Business Information**
-
-**Submitted By:** Um Al-Banein Yaqub Yusuf
-**Programming Language:** Python
-**Dataset:** `track_data_final.csv`
+A content-based music recommender that suggests similar tracks given a user's input song. MusicMatch analyzes audio and metadata features, computes similarity using cosine similarity, and surfaces human-readable explanations for each recommendation through a Streamlit web interface.
 
 ---
 
-## 2. Project Requirements and Installation
-
-### A. Required Python Libraries
-
-Install all dependencies using:
-
-``` bash
-pip install streamlit pandas numpy scikit-learn fuzzywuzzy
-```
-
-### Library Usage Overview
-
-  Library            Purpose in the Project
-  ------------------ ---------------------------------------------------
-  **streamlit**      Builds the interactive web interface (dashboard)
-  **pandas**         Data handling, CSV loading, duplicate removal
-  **numpy**          Numerical operations for vector calculations
-  **scikit-learn**   MinMaxScaler + cosine_similarity (core algorithm)
-  **fuzzywuzzy**     Fuzzy Matching for robust input handling
-
-----
-
-### B. File Structure
-
-Place the following files in the same directory:
-
-    recommender_engine.py   # Main system logic + Streamlit UI
-    track_data_final.csv    # Dataset containing track features
-    logo.png                # App icon used in the browser tab
+Table of Contents
+- Overview
+- Live Demo
+- Features
+- Quick Start
+- Installation
+- Usage
+- File Structure
+- Data & Preprocessing
+- Methodology
+- Explainability
+- Notes & Recommendations
+- Contributing
+- License
+- Contact
 
 ---
 
-## 3. Execution Instructions
+## Overview
 
-### 3.1 Run the Application
+MusicMatch is a lightweight, explainable, content-based recommender system built for research and educational use. Given a song title (and optionally an artist), the app finds the closest match in the dataset (robust to typos) and returns a ranked set of similar songs along with match percentages and a concise explanation for each recommendation.
 
-In your terminal, navigate to the project folder and run:
+Key capabilities:
+- Fuzzy/robust matching of user input
+- Feature scaling and cosine-similarity based ranking
+- Simple, intuitive Streamlit-based UI
+- Explainability based on shared genres, artist similarity, and popularity signals
 
-``` bash
+This project was developed as part of coursework at the University of Information Technology and Communications — College of Business Information.
+
+Author: Um Al-Banein Yusuf
+
+---
+
+## Live Demo
+
+Try the live application here:
+https://musicmatch---ai-music-recommender-system-t9qg7sqnj9nqi4wnvx3bq.streamlit.app/
+
+Click the "Live Demo" badge at the top to open the deployed Streamlit app.
+
+---
+
+## Features
+
+- Search by song title (fuzzy matching — tolerates typos)
+- Top-N recommendations with percentage match scores
+- Visual grid of recommendations (cover art support if provided)
+- Short explanation for each suggested track (genres, same artist, popularity)
+- Fast inference with precomputed feature vectors and efficient cosine similarity
+
+---
+
+## Quick Start
+
+Clone the repository and run the Streamlit app:
+
+```bash
+git clone https://github.com/umalbaneinyusuf/MusicMatch---AI-Music-Recommender-System.git
+cd MusicMatch---AI-Music-Recommender-System
+pip install -r requirements.txt    # or see Install below
 python -m streamlit run recommender_engine.py
 ```
 
-### 3.2 System Interaction
+Open http://localhost:8501 in your browser if Streamlit doesn't open automatically.
 
-After launching, Streamlit will open automatically in your browser
-(usually at):
+---
 
-    http://localhost:8501
+## Installation
 
--   **Search:** Enter a song name (e.g., "The Hills by The Weeknd")
--   **Results:**
-    -   The closest matched track (via Fuzzy Matching)
-    -   A grid of recommended songs
-    -   Match percentages
-    -   A logical explanation for each recommendation
+Install required packages:
 
-### 3.3 Exit the Application
+```bash
+pip install streamlit pandas numpy scikit-learn fuzzywuzzy python-Levenshtein
+```
 
-To stop the Streamlit server:
+Alternatively, create a `requirements.txt` with:
 
-    Ctrl + C
+```
+streamlit
+pandas
+numpy
+scikit-learn
+fuzzywuzzy
+python-Levenshtein
+```
 
-----
+and install with:
 
-## 4. Technical Summary for Evaluation
+```bash
+pip install -r requirements.txt
+```
 
-### Data Cleaning
+Notes:
+- `python-Levenshtein` is recommended to speed up fuzzy matching.
+- Consider replacing `fuzzywuzzy` with `rapidfuzz` for better performance in large-scale systems.
 
--   Automatic removal of missing values
--   Duplicate handling based on track and artist names to ensure unique
-    recommendations
+---
 
-### Feature Scaling
+## Usage
 
--   Uses **MinMaxScaler** to normalize numerical features to a `[0, 1]`
-    range
--   Track duration was intentionally excluded to prioritize stylistic
-    similarity over length
+1. Ensure `recommender_engine.py`, `track_data_final.csv`, and `logo.png` are present in the project root.
+2. Run the app with Streamlit (see Quick Start).
+3. Type a song name (e.g., "The Hills by The Weeknd") into the search box.
+4. Review the matched track and the grid of recommended songs with explanations.
 
-### Similarity Metric
+Example:
+- Input: "Blinding Lights"
+- Output: Closest dataset match + top 10 similar tracks with match scores and why each was chosen.
 
--   Core similarity is computed using **Cosine Similarity** between
-    feature vectors
+---
 
-### Robust Input Handling
+## File Structure
 
--   `fuzzywuzzy` matches user input to the closest existing song
--   A minimum match score (≥ 60) ensures relevant results and typo
-    tolerance
+- recommender_engine.py — main Streamlit app and recommender logic
+- track_data_final.csv — dataset of tracks and features
+- logo.png — app icon used in the browser tab
+- README.md — project documentation
 
-### Explainability Module
+(If you add additional scripts, models, or notebooks, list them here for clarity.)
 
-Each recommendation is supported by a clear justification based on:
+---
 
--   Shared Genres
--   Same Artist similarity
--   Popularity Trends: Mainstream Hits vs. Hidden Gems
+## Data & Preprocessing
+
+Dataset: track_data_final.csv
+
+Preprocessing steps implemented in the project:
+- Missing value removal
+- Duplicate handling (track + artist deduplication)
+- Feature selection and normalization
+- Numerical features scaled to [0, 1] using MinMaxScaler
+- Track duration excluded to prioritize stylistic similarity over length
+
+If you plan to extend the dataset:
+- Keep consistent column names and feature semantics
+- Recompute scaling and vectors after updates
+
+---
+
+## Methodology
+
+- Input normalization → map user input to nearest dataset title via fuzzy matching
+- Feature vector construction → numeric features (popularity, followers, genre indicators, etc.)
+- Feature scaling → MinMaxScaler
+- Similarity calculation → Cosine similarity on feature vectors
+- Ranking → Retrieve top-K most similar tracks
+- Output → Present result set with match percentages and textual justifications
+
+---
+
+## Explainability
+
+Each recommendation includes a short explanation derived from:
+- Genre overlap (shared genre tags)
+- Artist match (same artist boosts similarity)
+- Popularity relationship (mainstream vs. niche)
+These explanations help users understand why tracks were recommended and improve trust.
+
+---
+
+## License
+
+This project is provided under the MIT License. See LICENSE for details.
+
+---
+
+## Author
+
+Um Al-Banein Yusuf  
 
 ---
